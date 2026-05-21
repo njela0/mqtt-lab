@@ -10,6 +10,7 @@ all: $(TARGETS)
 
 test_publisher: test_publisher.c
 	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)
+	$(CC) $(CFLAGS) -Wno-unused-parameter -o $@ $< $(LDFLAGS)
 
 test_subscriber: test_subscriber.c
 	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)

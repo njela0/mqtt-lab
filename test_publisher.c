@@ -40,6 +40,12 @@ static void build_payload(char *buf, size_t len, int seq) {
 static void on_connect(struct mosquitto *mosq, void *userdata, int rc) {
     if (rc == 0) {
         printf("[publisher] Connected to %s:%d\n", BROKER, PORT);
+        printf("[subscriber] Subscribing to %s\n\n", TOPIC);
+
+        int sub_rc = mosquitto_subscribe(mosq, NULL, TOPIC, 1);
+        if (sub_rc != MOSQ_ERR_SUCCESS) {
+            fprintf(stderr, "[subscriber] Subscribe failed: %s\n", mosquitto_strerror(sub_rc));
+        }
     } else {
         fprintf(stderr, "[publisher] Connection failed: %s\n",
                 mosquitto_connack_string(rc));
