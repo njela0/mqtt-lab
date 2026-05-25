@@ -11,10 +11,10 @@
 #include <time.h>
 #include <mosquitto.h>
 
-#define BROKER      "test.mosquitto.org"
+#define BROKER      "127.0.0.1"
 #define PORT        1883
 #define TOPIC       "mqtt-lab/test/sensor"
-#define MSG_COUNT   5
+#define MSG_COUNT   500
 #define INTERVAL_S  2
 
 /* Generate a simple JSON payload with dummy sensor data */
@@ -63,7 +63,7 @@ int main(void) {
 
     mosquitto_lib_init();
 
-    struct mosquitto *mosq = mosquitto_new("mqtt-lab-publisher", true, NULL);
+    struct mosquitto *mosq = mosquitto_new("mqtt-lab-publisherb", true, NULL);
     if (!mosq) {
         fprintf(stderr, "[publisher] Failed to create mosquitto instance\n");
         mosquitto_lib_cleanup();
