@@ -16,6 +16,7 @@
 #define TOPIC       "mqtt-lab/test/sensor"
 #define MSG_COUNT   500
 #define INTERVAL_S  2
+#define JSON_SIZE 100 // 100 Zeichen zum testen - nicht berechnet
 
 /* Generate a simple JSON payload with dummy sensor data */
 static void build_payload(char *buf, size_t len, int seq) {
@@ -34,6 +35,35 @@ static void build_payload(char *buf, size_t len, int seq) {
         "\"temperature_c\":%.1f,"
         "\"humidity_pct\":%.1f}",
         seq, ts, temp, humidity);
+}
+// struct für Sensordaten
+typedef struct {
+    char timestamp[20]; // 20 zeichen mit \0 
+    char station_id[3];
+    float temperature_c;
+    float humidity_pct;
+} SensorData;
+
+// Bsp. Sensordaten
+SensorData example_data01 = {"2026.05.28 09:09:30", "S02", 24.4, 74.5};
+
+// String für JSON Output
+char* out_buffer[JSON_SIZE];
+
+int data_to_json(const SensorData* in_data, char* out_buffer, int buffer_size) {
+    
+    // Prüfen, ob Länge des Buffers der Mindestlänge des JSON-Strings entspricht
+    if (buffer_size < JSON_SIZE) {
+        return -1;
+    }
+
+    int ptr_index = 0;
+    out_buffer[ptr_index] = "{\nTest\n}";
+
+    // Prüfen, ob einer der SensorData Einträge leer ist und mit NULL ersetzen
+    if (in_data->timestamp == "") {
+        in_data->timestamp == NULL;
+    }
 }
 
 /* Callback: called when connection is established */
