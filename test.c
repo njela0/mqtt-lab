@@ -42,6 +42,22 @@ int valid_timestamp(const char* timestamp) {
   return 0;
 }
 
+// Funktion zum Prüfen, ob eine station_id im Array der tatsächlich vorhandenen stations enthalten ist
+int valid_station(const char* station_id, const char* available_stations[], int size_available_stations) {
+
+  if (!station_id) {
+    return -1;
+  }
+  for (int i = 0; i < size_available_stations; i++) {
+    if (!available_stations[i]) { // Prüfung auf NULL-Pointer und überspringen (Segfault vermeiden), erlaubt Array mit "Lücken"
+      continue;
+    }
+    if (strcmp(station_id, available_stations[i]) == 0) {
+      return 0;
+    }
+  }
+}
+
 int main() {
 
   // Zuweisung eines Beispiel-Datensatzes zur verwendeten struct-Variablen
